@@ -1,0 +1,23 @@
+# Dependency directories
+node_modules/
+
+# Compiled TypeScript files
+dist/
+
+# Logs
+*.log
+
+# Coverage directory
+coverage/
+
+# SQLite database file
+database.sqlite
+
+# Environment variables
+.env
+.env.test
+.env.production
+.env.development
+
+# VSCode
+.vscode/
