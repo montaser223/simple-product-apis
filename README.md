@@ -89,7 +89,7 @@ The project follows a clean architecture, separating concerns into distinct laye
 
    Example `.env` content:
    ```
-   PORT=3004
+   PORT=3000
    NODE_ENV=development
    DATABASE_STORAGE=./database.sqlite
    DATABASE_LOGGING=true
