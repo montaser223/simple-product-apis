@@ -129,7 +129,7 @@ To run all unit tests:
 npm test
 ```
 
-To run tests for a specific service (e.g., ProductService):
+To run tests for a specific service (e.g., OrderService):
 
 ```bash
 npm test src/__tests__/services/OrderService.test.ts
