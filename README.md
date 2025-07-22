@@ -69,8 +69,8 @@ The project follows a clean architecture, separating concerns into distinct laye
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/products-api.git
-   cd products-api
+   git clone https://github.com/montaser223/simple-product-apis.git
+   cd simple-product-apis
    ```
 
 2. **Install dependencies:**
