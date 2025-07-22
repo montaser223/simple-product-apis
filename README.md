@@ -132,7 +132,7 @@ npm test
 To run tests for a specific service (e.g., ProductService):
 
 ```bash
-npm test src/services/__tests__/ProductService.test.ts
+npm test src/__tests__/services/OrderService.test.ts
 ```
 
 ## Docker
