@@ -15,4 +15,8 @@ export const config = {
             default: { appenders: ['out'], level: process.env.LOG_LEVEL || 'debug' },
         },
     },
+    algolia: {
+        applicationId: process.env.ALGOLIA_APP_ID || 'YourApplicationID',
+        apiKey: process.env.ALGOLIA_API_KEY || 'YourAdminAPIKey',
+    }
 };

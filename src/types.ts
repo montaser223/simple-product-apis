@@ -8,4 +8,6 @@ export const TYPES = {
   UserModel: Symbol.for('UserModel'),
   ILogger: Symbol.for('ILogger'),
   IDatabase: Symbol.for('IDatabase'),
+  IAlgoliaService: Symbol.for('IAlgoliaService'),
+  IDefaultAlgoliaConfig: Symbol.for('IDefaultAlgoliaConfig'),
 };

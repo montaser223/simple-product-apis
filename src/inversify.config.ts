@@ -3,13 +3,15 @@ import { TYPES } from '@/types';
 import {  ProductRepository } from '@/repositories/ProductRepository';
 import { ProductService } from '@/services/ProductService';
 import { Product } from '@/models/Product';
-import { IProductService, IOrderService, IDatabase, ILogger } from '@/interfaces';
+import { IProductService, IOrderService, IDatabase, ILogger, IAlgoliaService, IAlgoliaConfig } from '@/interfaces';
 import { OrderService } from '@/services/OrderService';
 import { OrderRepository } from '@/repositories/OrderRepository';
 import { Order } from '@/models/Order';
 import { User } from '@/models/User';
 import { Logger } from '@/utils/logger';
 import { Database } from '@/database';
+import { AlgoliaService } from './services/algoliaService';
+import { config } from './config';
 
 const container = new Container();
 
@@ -24,5 +26,7 @@ container.bind<typeof User>(TYPES.UserModel).toConstantValue(User);
 
 container.bind<ILogger>(TYPES.ILogger).to(Logger).inSingletonScope();
 container.bind<IDatabase>(TYPES.IDatabase).to(Database).inSingletonScope();
+container.bind<IAlgoliaService>(TYPES.IAlgoliaService).to(AlgoliaService).inSingletonScope();
+container.bind<IAlgoliaConfig>(TYPES.IDefaultAlgoliaConfig).toConstantValue(config.algolia);
 
 export { container };

@@ -1,6 +1,6 @@
 import { injectable, inject } from 'inversify';
 import { Product, ProductCreationAttributes } from '@/models/Product';
-import { IProductService } from '@/interfaces';
+import { IProductService, IAlgoliaService } from '@/interfaces';
 import { TYPES } from '@/types';
 import { ProductRepository } from '@/repositories/ProductRepository';
 import { ILogger } from '@/interfaces/ILogger';
@@ -13,6 +13,7 @@ export class ProductService implements IProductService {
   constructor(
     @inject(TYPES.IProductRepository) private productRepository: ProductRepository,
     @inject(TYPES.ILogger) private logger: ILogger,
+    @inject(TYPES.IAlgoliaService) private algoliaService: IAlgoliaService,
   ) {}
 
   public async getProducts(page: number = 1, limit: number = 10): Promise<Product[]> {
@@ -58,7 +59,11 @@ export class ProductService implements IProductService {
       productData: productData,
       output: {}
     });
-    return this.productRepository.create(productData);
+    const [response]  = await Promise.all([
+      this.productRepository.create(productData),
+      this.algoliaService.insertData('products', productData)
+    ]);
+    return response;
   }
 
   public async updateProduct(id: number, productData: Partial<Product>): Promise<[number, Product[]]> {
