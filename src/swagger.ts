@@ -25,7 +25,7 @@ const options = {
               name: 'page',
               schema: {
                 type: 'integer',
-                default: 1,
+                default: 0,
               },
               description: 'Page number for pagination',
             },
@@ -37,6 +37,14 @@ const options = {
                 default: 10,
               },
               description: 'Number of items per page',
+            },
+            {
+              in: 'query',
+              name: 'q',
+              schema: {
+                type: 'string'
+              },
+              description: 'query string to search in products',
             },
           ],
           responses: {

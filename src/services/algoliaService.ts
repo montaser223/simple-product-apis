@@ -2,8 +2,9 @@ import { injectable, inject } from 'inversify';
 import { TYPES } from '@/types';
 import { ILogger } from '@/interfaces/ILogger';
 import { IAlgoliaService } from '@/interfaces';
-import { Algoliasearch, algoliasearch } from 'algoliasearch';
+import { Algoliasearch, algoliasearch, Hit } from 'algoliasearch';
 import { IAlgoliaConfig } from '@/interfaces';
+import { Product } from '@/models/Product';
 
 @injectable()
 export class AlgoliaService implements IAlgoliaService {
@@ -14,9 +15,75 @@ export class AlgoliaService implements IAlgoliaService {
   ) {
     this.client = algoliasearch(this.config.applicationId, this.config.apiKey);
   }
+
+    async listObjects(params: {indexName: string, page: number, hits: number}): Promise<Hit<Product>[]> {
+       const {indexName, page, hits} = params;
+       try {
+         const response = await this.client.browseObjects<Product>({
+            indexName,
+            aggregator: (hits) => hits,     
+            browseParams: {page, hitsPerPage: hits}
+        },{cacheable: true});
+        this.logger.info({
+            message: `Objects listed from index ${indexName} successfully`,
+            action: 'listObjects',
+            module: 'AlgoliaService',
+            output: {
+                indexName,
+                hits_count: response.hits.length,
+            }
+        });
+        return response.hits;
+       } catch (error) {
+        this.logger.error({
+            message: `Failed to list objects from Algolia index ${indexName}`,
+            action: 'listObjects',  
+            module: 'AlgoliaService',
+            output:{
+                indexName,
+                error_message: (error as any).message
+            }
+        });
+        return [];
+       }
+    }
+
+    async searchObjects(params: {indexName: string, query: string, page: number, hits: number}): Promise<Hit<Product>[] | undefined> {
+        const {indexName, query, page, hits} = params;
+        try {
+            const response = await this.client.searchSingleIndex<Product>({indexName, 
+                searchParams: {query, page, hitsPerPage: hits}},
+                {cacheable: true});
+            this.logger.info({
+                message: `Search in index ${indexName} with query "${query}" executed successfully`,    
+                action: 'searchObjects',
+                module: 'AlgoliaService',
+                output: {
+                    indexName,
+                    query,
+                    hits_count:response.hits.length,
+                    processingTimeMS:response.processingTimeMS,
+                    nbHits:response.nbHits,
+                }
+            });
+            return response.hits;
+        } catch (error) {
+            this.logger.error({
+                message: `Failed to search objects in Algolia index ${indexName} with query "${query}"`,
+                action: 'searchObjects',
+                module: 'AlgoliaService',
+                output:{
+                    indexName,  
+                    query,
+                    error_message: (error as any).message
+                }
+            });
+            return [];
+        }
+    }
+
     async insertData(indexName: string, data: any): Promise<void> {
         try {
-            // Simulate inserting data to Algolia index
            const response = await this.client.saveObject({indexName, body: data});
             this.logger.info({
                 message: `Data inserted to index ${indexName} successfully`,
@@ -28,7 +95,6 @@ export class AlgoliaService implements IAlgoliaService {
                     response
                 }
             });
-            // Here you would have the actual Algolia SDK call to insert data
         } catch (error) {
             this.logger.error({
                 message: `Failed to insert data to Algolia index ${indexName}`,
@@ -39,7 +105,6 @@ export class AlgoliaService implements IAlgoliaService {
                     error_message: (error as any).message
                 }
             });
-            // throw new AppError('Failed to insert data to Algolia', ERROR_CODES.INTERNAL_SERVER_ERROR);
         }       
     }
 }

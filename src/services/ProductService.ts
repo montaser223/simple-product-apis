@@ -16,7 +16,9 @@ export class ProductService implements IProductService {
     @inject(TYPES.IAlgoliaService) private algoliaService: IAlgoliaService,
   ) {}
 
-  public async getProducts(page: number = 1, limit: number = 10): Promise<Product[]> {
+  public async getProducts(params: {page: number, limit: number, q: string}): Promise<Product[]> {
+    const { page, limit, q } = params;
+
     this.logger.info({
       message: 'Fetching all products',
       module: 'ProductService',
@@ -25,8 +27,8 @@ export class ProductService implements IProductService {
       limit: limit,
       output: {}
     });
-    const offset = (page - 1) * limit;
-    return this.productRepository.findAll({ limit, offset });
+    if (q) return this.algoliaService.searchObjects({indexName: 'products', query: q, page, hits: limit}) as Promise<Product[]>;
+    return this.algoliaService.listObjects({indexName: 'products', page, hits: limit}) as Promise<Product[]>;
   }
 
   public async getProductById(id: number): Promise<Product | null> {

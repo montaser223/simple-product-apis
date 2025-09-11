@@ -16,14 +16,15 @@ export class ProductController {
 
   @httpGet('/')
   public async getProducts(
-    @queryParam('page') page: number = 1,
+    @queryParam('page') page: number = 0,
     @queryParam('limit') limit: number = 10,
+    @queryParam('q') q: string | undefined,
     _: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const products = await this.productService.getProducts(page, limit);
+      const products = await this.productService.getProducts({ page, limit, q});
       res.json(products);
     } catch (error: any) {
       next(error);

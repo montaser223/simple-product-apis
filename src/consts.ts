@@ -49,4 +49,9 @@ export const ERROR_CODES = {
         message: 'Order with the specified ID not found.',
         statusCode: HTTP_STATUS.NOT_FOUND,
     },
+    AlgoliaError: {
+        code: 'ALGOLIA_ERROR',
+        message: 'An error occurred while interacting with Algolia service.',
+        statusCode: HTTP_STATUS.INTERNAL_SERVER_ERROR,
+    },
 };
