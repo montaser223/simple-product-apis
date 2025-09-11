@@ -22,7 +22,7 @@ export class AlgoliaService implements IAlgoliaService {
          const response = await this.client.browseObjects<Product>({
             indexName,
             aggregator: (hits) => hits,     
-            browseParams: {page, hitsPerPage: hits}
+            browseParams: {page, hitsPerPage: hits},
         },{cacheable: true});
         this.logger.info({
             message: `Objects listed from index ${indexName} successfully`,
@@ -52,7 +52,7 @@ export class AlgoliaService implements IAlgoliaService {
         const {indexName, query, page, hits} = params;
         try {
             const response = await this.client.searchSingleIndex<Product>({indexName, 
-                searchParams: {query, page, hitsPerPage: hits}},
+                searchParams: {query, page, hitsPerPage: hits, attributesToHighlight: []}},
                 {cacheable: true});
             this.logger.info({
                 message: `Search in index ${indexName} with query "${query}" executed successfully`,    
