@@ -25,6 +25,7 @@
     "joi": "^17.13.3",
     "log4js": "^6.9.1",
     "module-alias": "^2.2.3",
+    "openai": "^4.28.0",
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7",

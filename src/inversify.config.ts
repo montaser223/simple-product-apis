@@ -15,6 +15,12 @@ import { Logger } from '@/utils/logger';
 import { Database } from '@/database';
 import { AlgoliaService } from './services/algoliaService';
 import { config } from './config';
+import { ILLMService } from '@/interfaces/ILLMService';
+import { LLMService } from '@/services/LLMService';
+import { IFactGenerationService } from '@/interfaces/IFactGenerationService';
+import { FactGenerationService } from '@/services/FactGenerationService';
+import { ProductFact } from '@/models/ProductFact';
+import { ProductFaceRepository } from '@/repositories/ProductFactsRepository';
 
 const container = new Container();
 
@@ -34,5 +40,11 @@ container.bind<IAlgoliaConfig>(TYPES.IDefaultAlgoliaConfig).toConstantValue(conf
 
 container.bind<IZohoAuthService>(TYPES.IZohoAuthService).to(ZohoAuthService).inSingletonScope();
 container.bind<IZohoCrmService>(TYPES.IZohoCrmService).to(ZohoCrmService).inSingletonScope();
+
+// LLM and Fact Generation Services
+container.bind<ILLMService>(TYPES.ILLMService).to(LLMService).inSingletonScope();
+container.bind<IFactGenerationService>(TYPES.IFactGenerationService).to(FactGenerationService).inSingletonScope();
+container.bind<typeof ProductFact>(TYPES.ProductFactModel).toConstantValue(ProductFact);
+container.bind<ProductFaceRepository>(TYPES.ProductFaceRepository).to(ProductFaceRepository);
 
 export { container };

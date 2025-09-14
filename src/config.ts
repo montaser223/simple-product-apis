@@ -29,5 +29,9 @@ export const config = {
             accountsBase: process.env.ZOHO_ACCOUNTS_BASE || 'https://accounts.zoho.sa',
             crmApiBase: process.env.ZOHO_CRM_API_BASE || 'https://www.zohoapis.sa',
         }
+    },
+    openAi: {
+        apiKey: process.env.OPENAI_API_KEY || '',
+        model: process.env.OPENAI_API_MODEL || 'gpt-3.5-turbo'
     }
 };

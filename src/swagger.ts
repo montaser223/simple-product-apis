@@ -715,6 +715,256 @@ const options = {
           },
         },
       },
+      '/facts': {
+        get: {
+          summary: 'Retrieve facts by type',
+          tags: ['Facts'],
+          parameters: [
+            {
+              in: 'query',
+              name: 'type',
+              required: true,
+              schema: {
+                type: 'string',
+                enum: ['product', 'order', 'recommendation', 'market'],
+              },
+              description: 'Type of facts to retrieve',
+            },
+            {
+              in: 'query',
+              name: 'productId',
+              schema: {
+                type: 'integer',
+              },
+              description: 'Product ID to filter facts (optional)',
+            },
+          ],
+          responses: {
+            200: {
+              description: 'Facts retrieved successfully',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/FactResponse',
+                  },
+                },
+              },
+            },
+            400: {
+              description: 'Invalid input',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/facts/product/{id}': {
+        post: {
+          summary: 'Generate facts for a specific product',
+          tags: ['Facts'],
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: {
+                type: 'integer',
+              },
+              description: 'ID of the product to generate facts for',
+            },
+          ],
+          responses: {
+            201: {
+              description: 'Product facts generated successfully',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/FactResponse',
+                  },
+                },
+              },
+            },
+            404: {
+              description: 'Product not found',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/facts/insights': {
+        post: {
+          summary: 'Generate order insights',
+          tags: ['Facts'],
+          responses: {
+            201: {
+              description: 'Order insights generated successfully',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/FactResponse',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/facts/recommendations': {
+        post: {
+          summary: 'Generate product recommendations',
+          tags: ['Facts'],
+          responses: {
+            201: {
+              description: 'Product recommendations generated successfully',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/FactResponse',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/facts/market-analysis': {
+        post: {
+          summary: 'Generate market analysis',
+          tags: ['Facts'],
+          responses: {
+            201: {
+              description: 'Market analysis generated successfully',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/FactResponse',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/facts/{id}': {
+        delete: {
+          summary: 'Delete a fact by ID',
+          tags: ['Facts'],
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: {
+                type: 'integer',
+              },
+              description: 'ID of the fact to delete',
+            },
+          ],
+          responses: {
+            200: {
+              description: 'Fact deleted successfully',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      success: {
+                        type: 'boolean',
+                        description: 'Whether the operation was successful',
+                      },
+                      message: {
+                        type: 'string',
+                        description: 'Response message',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            404: {
+              description: 'Fact not found',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     tags: [
       {
@@ -728,6 +978,10 @@ const options = {
       {
         name: 'Zoho Products',
         description: 'Zoho CRM product management and retrieval',
+      },
+      {
+        name: 'Facts',
+        description: 'AI-generated facts and insights from products and orders',
       },
     ],
     components: {
@@ -864,6 +1118,98 @@ const options = {
             Description: 'A sample product from Zoho CRM',
             Unit_Price: 19.99,
             Qty_in_Stock: 100,
+          },
+        },
+        ProductFact: {
+          type: 'object',
+          required: ['productId', 'factType', 'content', 'confidence'],
+          properties: {
+            id: {
+              type: 'integer',
+              description: 'The unique identifier of the fact',
+            },
+            productId: {
+              type: 'integer',
+              description: 'The ID of the product this fact relates to (0 for global facts)',
+            },
+            factType: {
+              type: 'string',
+              enum: ['product', 'order', 'recommendation', 'market'],
+              description: 'The type of fact generated',
+            },
+            content: {
+              type: 'string',
+              description: 'The actual fact content generated by the LLM',
+            },
+            confidence: {
+              type: 'number',
+              format: 'float',
+              description: 'Confidence score of the fact (0-1)',
+            },
+            metadata: {
+              type: 'object',
+              description: 'Additional metadata about the fact',
+            },
+            createdAt: {
+              type: 'string',
+              format: 'date-time',
+              description: 'When the fact was created',
+            },
+            updatedAt: {
+              type: 'string',
+              format: 'date-time',
+              description: 'When the fact was last updated',
+            },
+          },
+          example: {
+            id: 1,
+            productId: 1,
+            factType: 'product',
+            content: 'This product has generated $2,400 in revenue from 12 orders, making it one of the top performers in the catalog.',
+            confidence: 0.8,
+            metadata: {
+              generatedAt: '2023-01-01T12:00:00Z',
+              orderCount: 12,
+              totalRevenue: 2400
+            },
+            createdAt: '2023-01-01T12:00:00Z',
+            updatedAt: '2023-01-01T12:00:00Z',
+          },
+        },
+        FactResponse: {
+          type: 'object',
+          properties: {
+            success: {
+              type: 'boolean',
+              description: 'Whether the operation was successful',
+            },
+            data: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/ProductFact',
+              },
+              description: 'Array of generated facts',
+            },
+            message: {
+              type: 'string',
+              description: 'Response message',
+            },
+          },
+          example: {
+            success: true,
+            data: [
+              {
+                id: 1,
+                productId: 1,
+                factType: 'product',
+                content: 'This product has generated $2,400 in revenue from 12 orders.',
+                confidence: 0.8,
+                metadata: {},
+                createdAt: '2023-01-01T12:00:00Z',
+                updatedAt: '2023-01-01T12:00:00Z',
+              },
+            ],
+            message: 'Generated 1 facts for product 1',
           },
         },
         Error: {

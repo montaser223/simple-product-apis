@@ -4,6 +4,7 @@ export const TYPES = {
   ProductModel: Symbol.for('ProductModel'),
   IOrderService: Symbol.for('IOrderService'),
   OrderRepository: Symbol.for('OrderRepository'),
+  ProductFaceRepository: Symbol.for('ProductFaceRepository'),
   OrderModel: Symbol.for('OrderModel'),
   UserModel: Symbol.for('UserModel'),
   ILogger: Symbol.for('ILogger'),
@@ -12,4 +13,8 @@ export const TYPES = {
   IDefaultAlgoliaConfig: Symbol.for('IDefaultAlgoliaConfig'),
   IZohoAuthService: Symbol.for('IZohoAuthService'),
   IZohoCrmService: Symbol.for('IZohoCrmService'),
+  ILLMService: Symbol.for('ILLMService'),
+  IFactGenerationService: Symbol.for('IFactGenerationService'),
+  ProductFactModel: Symbol.for('ProductFactModel'),
+  ContentSanitizer: Symbol.for('ContentSanitizer'),
 };

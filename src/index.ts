@@ -17,6 +17,7 @@ import '@/controllers/ProductController';
 import '@/controllers/ZohoProductController';
 import '@/controllers/HealthController';
 import '@/controllers/OrderController';
+import '@/controllers/FactController';
 
 import { errorHandler } from '@/middlewares/errorHandler';
 import swaggerSpec from './swagger';

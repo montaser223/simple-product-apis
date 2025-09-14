@@ -4,6 +4,7 @@ import { config } from '@/config';
 import { Product } from '@/models/Product';
 import { User } from '@/models/User';
 import { Order } from '@/models/Order';
+import { ProductFact } from '@/models/ProductFact';
 import { ILogger } from '@/interfaces/ILogger';
 import { IDatabase } from '@/interfaces/IDatabase';
 import { TYPES } from '@/types';
@@ -38,6 +39,7 @@ export class Database implements IDatabase {
             Product.initialize(this.sequelize);
             User.initialize(this.sequelize);
             Order.initialize(this.sequelize);
+            ProductFact.initialize(this.sequelize);
 
             // Set up associations
             Order.associate();

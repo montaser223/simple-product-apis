@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { Model, CreationAttributes, WhereOptions, ModelStatic } from 'sequelize';
 import { IRepository, Identifiable } from '@/interfaces';
+import { MakeNullishOptional } from 'sequelize/types/utils';
 
 @injectable()
 export class BaseRepository<T extends Model<any, any> & Identifiable> implements IRepository<T> {
@@ -10,7 +11,11 @@ export class BaseRepository<T extends Model<any, any> & Identifiable> implements
     this.model = model;
   }
 
-  public async findAll(options?: { where?: WhereOptions<T>; limit?: number; offset?: number }): Promise<T[]> {
+  public async bulkCreate(items: MakeNullishOptional<T['_creationAttributes']>[]): Promise<T[]> {
+   return this.model.bulkCreate(items);
+  }
+
+  public async findAll(options?: { where?: WhereOptions<T>; limit?: number; offset?: number, order: any }): Promise<T[]> {
     return this.model.findAll(options);
   }
 
