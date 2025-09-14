@@ -10,4 +10,6 @@ export const TYPES = {
   IDatabase: Symbol.for('IDatabase'),
   IAlgoliaService: Symbol.for('IAlgoliaService'),
   IDefaultAlgoliaConfig: Symbol.for('IDefaultAlgoliaConfig'),
+  IZohoAuthService: Symbol.for('IZohoAuthService'),
+  IZohoCrmService: Symbol.for('IZohoCrmService'),
 };

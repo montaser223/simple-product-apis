@@ -17,6 +17,7 @@
     "@types/joi": "^17.2.3",
     "@types/log4js": "^2.3.5",
     "algoliasearch": "^5.37.0",
+    "axios": "^1.12.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
     "inversify": "^6.2.2",

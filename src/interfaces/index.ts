@@ -5,3 +5,5 @@ export * from '@/interfaces/ILogger';
 export * from '@/interfaces/IOrderService';
 export * from '@/interfaces/IAlgoliaService';
 export * from '@/interfaces/IAlgoliaConfig';
+export * from '@/interfaces/IZohoAuthService';
+export * from '@/interfaces/IZohoCrmService';

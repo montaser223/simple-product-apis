@@ -54,4 +54,64 @@ export const ERROR_CODES = {
         message: 'An error occurred while interacting with Algolia service.',
         statusCode: HTTP_STATUS.INTERNAL_SERVER_ERROR,
     },
+    DUPLICATE_DATA: {
+        code: 'DUPLICATE_DATA',
+        message: 'Duplicate data error.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    INVALID_MODULE: {
+        code: 'INVALID_MODULE',
+        message: 'The specified module is invalid.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    TOKEN_BOUND_DATA_MISMATCH: {
+        code: 'TOKEN_BOUND_DATA_MISMATCH',
+        message: 'The page_token given seems to be invalid or input param is added, altered, or deleted',
+        statusCode: HTTP_STATUS.UNAUTHORIZED,
+    },
+    INVALID_DATA: {
+        code: 'INVALID_DATA',
+        message: 'The provided data is invalid or malformed.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    REQUIRED_PARAM_MISSING: {
+        code: 'REQUIRED_PARAM_MISSING',
+        message: 'A required parameter is missing.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    LIMIT_EXCEEDED: {
+        code: 'LIMIT_EXCEEDED',
+        message: 'Fields limit exceeded.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    EXPIRED_VALUE: {
+        code: 'EXPIRED_VALUE',
+        message: 'The value provided has expired.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    DISCRETE_PAGINATION_LIMIT_EXCEEDED: {
+        code: 'DISCRETE_PAGINATION_LIMIT_EXCEEDED',
+        message: 'You can only get the first 2000 records without using page_token param.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    AMBIGUITY_DURING_PROCESSING: {
+        code: 'AMBIGUITY_DURING_PROCESSING',
+        message: 'You cannot use both cvid and sort_by, and page and page_token.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    PAGINATION_LIMIT_EXCEEDED: {
+        code: 'PAGINATION_LIMIT_EXCEEDED',
+        message: 'You can only get up to first 100000 records using page_token param.',
+        statusCode: HTTP_STATUS.BAD_REQUEST,
+    },
+    NO_PERMISSION: {
+        code: 'NO_PERMISSION',
+        message: 'You do not have permission to access this module or perform this action.',
+        statusCode: HTTP_STATUS.FORBIDDEN,
+    },
+    NOT_SUPPORTED: {
+        code: 'NOT_SUPPORTED',
+        message: 'This API is supported only for admin users.',
+        statusCode: HTTP_STATUS.FORBIDDEN,
+    },
 };

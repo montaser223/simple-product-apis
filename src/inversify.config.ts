@@ -4,6 +4,9 @@ import {  ProductRepository } from '@/repositories/ProductRepository';
 import { ProductService } from '@/services/ProductService';
 import { Product } from '@/models/Product';
 import { IProductService, IOrderService, IDatabase, ILogger, IAlgoliaService, IAlgoliaConfig } from '@/interfaces';
+import { IZohoAuthService, IZohoCrmService } from '@/interfaces';
+import { ZohoAuthService } from '@/services/zohoAuthService';
+import { ZohoCrmService } from '@/services/zohoCrmService';
 import { OrderService } from '@/services/OrderService';
 import { OrderRepository } from '@/repositories/OrderRepository';
 import { Order } from '@/models/Order';
@@ -28,5 +31,8 @@ container.bind<ILogger>(TYPES.ILogger).to(Logger).inSingletonScope();
 container.bind<IDatabase>(TYPES.IDatabase).to(Database).inSingletonScope();
 container.bind<IAlgoliaService>(TYPES.IAlgoliaService).to(AlgoliaService).inSingletonScope();
 container.bind<IAlgoliaConfig>(TYPES.IDefaultAlgoliaConfig).toConstantValue(config.algolia);
+
+container.bind<IZohoAuthService>(TYPES.IZohoAuthService).to(ZohoAuthService).inSingletonScope();
+container.bind<IZohoCrmService>(TYPES.IZohoCrmService).to(ZohoCrmService).inSingletonScope();
 
 export { container };

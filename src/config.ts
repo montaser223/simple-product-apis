@@ -18,5 +18,16 @@ export const config = {
     algolia: {
         applicationId: process.env.ALGOLIA_APP_ID || 'YourApplicationID',
         apiKey: process.env.ALGOLIA_API_KEY || 'YourAdminAPIKey',
+    },
+    zoho: {
+        dataCenter: process.env.ZOHO_DC || 'sa',
+        clientId: process.env.ZOHO_CLIENT_ID || '',
+        clientSecret: process.env.ZOHO_CLIENT_SECRET || '',
+        soid: process.env.ZOHO_SOID || '',
+        scopes: process.env.ZOHO_SCOPES || 'ZohoCRM.modules.ALL,ZohoCRM.settings.ALL',
+        endpoints: {
+            accountsBase: process.env.ZOHO_ACCOUNTS_BASE || 'https://accounts.zoho.sa',
+            crmApiBase: process.env.ZOHO_CRM_API_BASE || 'https://www.zohoapis.sa',
+        }
     }
 };

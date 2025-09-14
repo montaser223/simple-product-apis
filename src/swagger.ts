@@ -617,6 +617,104 @@ const options = {
           },
         },
       },
+      '/zoho/products': {
+        get: {
+          summary: 'Retrieve a list of products from Zoho CRM',
+          tags: ['Zoho Products'],
+          parameters: [
+            {
+              in: 'query',
+              name: 'page',
+              schema: {
+                type: 'integer',
+                default: 1,
+              },
+              description: 'Page number for pagination',
+            },
+            {
+              in: 'query',
+              name: 'perPage',
+              schema: {
+                type: 'integer',
+                default: 20,
+              },
+              description: 'Number of items per page',
+            },
+            {
+              in: 'query',
+              name: 'q',
+              schema: {
+                type: 'string'
+              },
+              description: 'Search term to filter products',
+            },
+          ],
+          responses: {
+            200: {
+              description: 'A list of Zoho products.',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/ZohoProduct',
+                    },
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+          },
+        },
+        post: {
+          summary: 'Create a new product in Zoho CRM',
+          tags: ['Zoho Products'],
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ZohoProduct',
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: 'Product created successfully in Zoho CRM',
+            },
+            400: {
+              description: 'Invalid input',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Internal server error',
+              content: {
+                'application/json': {
+                  schema: {
+                    $ref: '#/components/schemas/Error',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     tags: [
       {
@@ -626,6 +724,10 @@ const options = {
       {
         name: 'Orders',
         description: 'Order management and retrieval',
+      },
+      {
+        name: 'Zoho Products',
+        description: 'Zoho CRM product management and retrieval',
       },
     ],
     components: {
@@ -725,6 +827,43 @@ const options = {
             totalPrice: 2400.00,
             createdAt: '2023-01-01T12:00:00Z',
             updatedAt: '2023-01-01T12:00:00Z',
+          },
+        },
+        ZohoProduct: {
+          type: 'object',
+          required: ['Product_Name', 'Unit_Price', 'Qty_in_Stock', 'Description'],
+          properties: {
+            id: {
+              type: 'string',
+              description: 'The unique identifier of the product in Zoho CRM',
+            },
+            Product_Name: {
+              type: 'string',
+              description: 'The name of the product',
+              minLength: 1,
+              maxLength: 100,
+            },
+            Description: {
+              type: 'string',
+              description: 'The description of the product',
+              maxLength: 500,
+            },
+            Unit_Price: {
+              type: 'number',
+              format: 'float',
+              description: 'The unit price of the product',
+            },
+            Qty_in_Stock: {
+              type: 'integer',
+              description: 'The quantity in stock',
+              minimum: 0,
+            },
+          },
+          example: {
+            Product_Name: 'Sample Product',
+            Description: 'A sample product from Zoho CRM',
+            Unit_Price: 19.99,
+            Qty_in_Stock: 100,
           },
         },
         Error: {

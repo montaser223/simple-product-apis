@@ -14,6 +14,7 @@ import { IDatabase } from '@/interfaces/IDatabase';
 
 // Import controllers to ensure they are registered
 import '@/controllers/ProductController';
+import '@/controllers/ZohoProductController';
 import '@/controllers/HealthController';
 import '@/controllers/OrderController';
 
